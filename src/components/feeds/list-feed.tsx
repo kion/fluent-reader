@@ -40,7 +40,7 @@ class ListFeed extends React.Component<FeedProps> {
 
         switch (this.props.viewType) {
             case ViewType.Magazine:
-                return <MagazineCard {...props} magazineWidth={this.props.magazineWidth} />
+                return <MagazineCard {...props} magazineWidth={this.props.magazineWidth} magazineAdaptiveHeight={this.props.magazineAdaptiveHeight} />
             case ViewType.Compact:
                 return <CompactCard {...props} />
             default:
@@ -83,6 +83,7 @@ class ListFeed extends React.Component<FeedProps> {
                     shouldReceiveFocus={this.canFocusChild}
                     data-is-scrollable>
                     <List
+                        key={String(this.props.magazineAdaptiveHeight)}
                         className={AnimationClassNames.slideUpIn10}
                         items={this.props.items}
                         onRenderCell={this.onRenderItem}

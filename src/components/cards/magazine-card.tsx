@@ -3,12 +3,14 @@ import { Card } from "./card"
 import CardInfo from "./info"
 import Highlights from "./highlights"
 import { SourceTextDirection } from "../../scripts/models/source"
+import { extractSnippetExcerpt } from "../../scripts/utils"
 
 const className = (props: Card.Props) => {
     let cn = ["card", "magazine-card"]
     if (props.item.hasRead) cn.push("read")
     if (props.item.hidden) cn.push("hidden")
     if (props.source.textDir === SourceTextDirection.RTL) cn.push("rtl")
+    if (props.magazineAdaptiveHeight) cn.push("adaptive-height")
     return cn.join(" ")
 }
 
@@ -29,7 +31,6 @@ const MagazineCard: React.FunctionComponent<Card.Props> = props => {
         cardStyle.width = `${props.magazineWidth}%`
         cardStyle.margin = '0 auto'
     }
-
     return (
         <div
             className={className(props)}
@@ -53,7 +54,7 @@ const MagazineCard: React.FunctionComponent<Card.Props> = props => {
                     </h3>
                     <p className="snippet" style={snippetStyle}>
                         <Highlights
-                            text={props.item.snippet}
+                            text={extractSnippetExcerpt(props.item.snippet)}
                             filter={props.filter}
                         />
                     </p>

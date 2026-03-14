@@ -275,3 +275,40 @@ export function initTouchBarWithTexts() {
         notifications: intl.get("nav.notifications"),
     })
 }
+
+export const EXCERPT_SENTENCE_LIMIT = 15
+export const EXCERPT_WORD_LIMIT = 150
+
+export function extractSnippetExcerpt(text: string): string {
+    if (!text) return ''
+    const trimmed = text.trim()
+    if (!trimmed) return ''
+
+    // Find sentence boundaries: ./?/! followed by whitespace or end of string
+    const sentenceEndRegex = /[.!?](?=\s|$)/g
+    let match: RegExpExecArray | null
+    let sentenceCount = 0
+    let lastBoundary = 0
+
+    while ((match = sentenceEndRegex.exec(trimmed)) !== null) {
+        const boundary = match.index + 1
+        const wordCount = trimmed.substring(0, boundary).trim().split(/\s+/).length
+        if (wordCount > EXCERPT_WORD_LIMIT) break  // word limit hit mid-sentence
+        sentenceCount++
+        lastBoundary = boundary
+        if (sentenceCount >= EXCERPT_SENTENCE_LIMIT) break
+    }
+
+    if (sentenceCount >= EXCERPT_SENTENCE_LIMIT) {
+        return trimmed.substring(0, lastBoundary).trim()
+    }
+
+    // Fewer sentences than limit — apply word limit to remaining text if needed
+    const words = trimmed.split(/\s+/)
+    if (words.length > EXCERPT_WORD_LIMIT) {
+        const excerpt = words.slice(0, EXCERPT_WORD_LIMIT).join(' ')
+        return /[.!?]$/.test(excerpt) ? excerpt : excerpt + '...'
+    }
+
+    return /[.!?]$/.test(trimmed) ? trimmed : trimmed + '...'
+}

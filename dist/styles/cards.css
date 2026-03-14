@@ -310,6 +310,14 @@
     line-height: 21px;
     -webkit-line-clamp: 3;
 }
+.magazine-card.adaptive-height {
+    max-height: none;
+}
+.magazine-card.adaptive-height p.snippet {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    display: block;
+}
 
 .compact-card {
     height: 31px;

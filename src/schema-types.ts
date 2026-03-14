@@ -105,5 +105,6 @@ export type SchemaTypes = {
     viewFontConfigs: Partial<Record<ViewType, ViewFontConfigs>>
     useNeDB: boolean
     magazineWidth?: number
+    magazineAdaptiveHeight?: boolean
     listPanelWidth?: number
 }

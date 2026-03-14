@@ -3,6 +3,7 @@ import { Card } from "./card"
 import CardInfo from "./info"
 import Highlights from "./highlights"
 import { SourceTextDirection } from "../../scripts/models/source"
+import { extractSnippetExcerpt } from "../../scripts/utils"
 
 const className = (props: Card.Props) => {
     let cn = ["card", "default-card"]
@@ -43,7 +44,7 @@ const DefaultCard: React.FunctionComponent<Card.Props> = props => {
                 <Highlights text={props.item.title} filter={props.filter} title />
             </h3>
             <p className={"snippet" + (props.item.thumb ? "" : " show")} style={snippetStyle}>
-                <Highlights text={props.item.snippet} filter={props.filter} />
+                <Highlights text={extractSnippetExcerpt(props.item.snippet)} filter={props.filter} />
             </p>
         </div>
     )

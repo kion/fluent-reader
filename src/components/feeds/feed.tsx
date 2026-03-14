@@ -17,6 +17,7 @@ export type FeedProps = FeedReduxProps & {
     sourceMap: Object
     filter: FeedFilter
     magazineWidth: number
+    magazineAdaptiveHeight: boolean
     shortcuts: (item: RSSItem, e: KeyboardEvent) => void
     markRead: (item: RSSItem) => void
     contextMenu: (feedId: string, item: RSSItem, e) => void

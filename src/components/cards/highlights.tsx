@@ -17,8 +17,7 @@ const Highlights: React.FunctionComponent<HighlightsProps> = props => {
         props.filter.search === "" ||
         !(regex = validateRegex(props.filter.search, flags))
     ) {
-        if (props.title) spans.push([props.text, false])
-        else spans.push([props.text.substr(0, 325), false])
+        spans.push([props.text, false])
     } else if (props.title) {
         let match: RegExpExecArray
         do {
@@ -54,7 +53,7 @@ const Highlights: React.FunctionComponent<HighlightsProps> = props => {
                 spans.push([props.text.substr(regex.lastIndex, 300), false])
             }
         } else {
-            spans.push([props.text.substr(0, 325), false])
+            spans.push([props.text, false])
         }
     }
 

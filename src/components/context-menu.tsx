@@ -13,7 +13,7 @@ import {
     ContextualMenuItemType,
     DirectionalHint,
 } from "office-ui-fabric-react/lib/ContextualMenu"
-import { closeContextMenu, ContextMenuType, setMagazineWidth } from "../scripts/models/app"
+import { closeContextMenu, ContextMenuType, setMagazineAdaptiveHeight, setMagazineWidth } from "../scripts/models/app"
 import {
     markAllRead,
     markRead,
@@ -369,6 +369,7 @@ function ViewContextMenu() {
     const viewFontConfigs = useAppSelector(state => state.page.viewFontConfigs)
     const filter = useAppSelector(state => state.page.filter.type)
     const magazineWidth = useAppSelector(state => state.app.magazineWidth)
+    const magazineAdaptiveHeight = useAppSelector(state => state.app.magazineAdaptiveHeight)
 
     const menuItems: IContextualMenuItem[] = [
         {
@@ -410,24 +411,55 @@ function ViewContextMenu() {
                         checked: viewType === ViewType.Compact,
                         onClick: () => dispatch(switchView(ViewType.Compact)),
                     },
-                    {
-                        key: "divider_1",
-                        itemType: ContextualMenuItemType.Divider,
-                    },
-                    ...(viewType === ViewType.Magazine ? [{
-                        key: "magazineWidth",
-                        text: "Width",
-                        iconProps: { iconName: "FullWidth" },
-                        subMenuProps: {
-                            items: MAGAZINE_WIDTH_OPTIONS.map(width => ({
-                                key: String(width),
-                                text: `${width}%`,
-                                canCheck: true,
-                                checked: width === magazineWidth,
-                                onClick: () => dispatch(setMagazineWidth(width)),
-                            })),
+                ],
+            },
+        },
+        {
+            key: "section_2",
+            itemType: ContextualMenuItemType.Section,
+            sectionProps: {
+                title: intl.get("context.display"),
+                bottomDivider: true,
+                items: [
+                    ...(viewType === ViewType.Magazine ? [
+                        {
+                            key: "magazineWidth",
+                            text: "Width",
+                            iconProps: { iconName: "FullWidth" },
+                            subMenuProps: {
+                                items: MAGAZINE_WIDTH_OPTIONS.map(width => ({
+                                    key: String(width),
+                                    text: `${width}%`,
+                                    canCheck: true,
+                                    checked: width === magazineWidth,
+                                    onClick: () => dispatch(setMagazineWidth(width)),
+                                })),
+                            },
                         },
-                    }] : []),
+                        {
+                            key: "magazineHeight",
+                            text: intl.get("context.height"),
+                            iconProps: { iconName: "AutoHeight" },
+                            subMenuProps: {
+                                items: [
+                                    {
+                                        key: "fixedHeight",
+                                        text: intl.get("context.fixedHeight"),
+                                        canCheck: true,
+                                        checked: !magazineAdaptiveHeight,
+                                        onClick: () => dispatch(setMagazineAdaptiveHeight(false)),
+                                    },
+                                    {
+                                        key: "adaptiveHeight",
+                                        text: intl.get("context.adaptiveHeight"),
+                                        canCheck: true,
+                                        checked: magazineAdaptiveHeight,
+                                        onClick: () => dispatch(setMagazineAdaptiveHeight(true)),
+                                    },
+                                ],
+                            },
+                        },
+                    ] : []),
                     {
                         key: "fontFamily",
                         text: intl.get("article.font"),
@@ -472,7 +504,7 @@ function ViewContextMenu() {
             },
         },
         {
-            key: "section_2",
+            key: "section_3",
             itemType: ContextualMenuItemType.Section,
             sectionProps: {
                 title: intl.get("context.filter"),
@@ -521,7 +553,7 @@ function ViewContextMenu() {
             },
         },
         {
-            key: "section_3",
+            key: "section_4",
             itemType: ContextualMenuItemType.Section,
             sectionProps: {
                 title: intl.get("search"),

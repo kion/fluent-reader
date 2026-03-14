@@ -2,6 +2,7 @@ import * as React from "react"
 import { Card } from "./card"
 import CardInfo from "./info"
 import Highlights from "./highlights"
+import { extractSnippetExcerpt } from "../../scripts/utils"
 import { ViewConfigs } from "../../schema-types"
 import { SourceTextDirection } from "../../scripts/models/source"
 
@@ -51,7 +52,7 @@ const ListCard: React.FunctionComponent<Card.Props> = props => {
                 {Boolean(props.viewConfigs & ViewConfigs.ShowSnippet) && (
                     <p className="snippet" style={snippetStyle}>
                         <Highlights
-                            text={props.item.snippet}
+                            text={extractSnippetExcerpt(props.item.snippet)}
                             filter={props.filter}
                         />
                     </p>

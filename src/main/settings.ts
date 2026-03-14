@@ -232,6 +232,14 @@ ipcMain.handle("set-magazine-width", (_, width: number) => {
     store.set(MAGAZINE_WIDTH_STORE_KEY, width)
 })
 
+const MAGAZINE_ADAPTIVE_HEIGHT_STORE_KEY = "magazineAdaptiveHeight"
+ipcMain.on("get-magazine-adaptive-height", event => {
+    event.returnValue = store.get(MAGAZINE_ADAPTIVE_HEIGHT_STORE_KEY, false)
+})
+ipcMain.handle("set-magazine-adaptive-height", (_, adaptive: boolean) => {
+    store.set(MAGAZINE_ADAPTIVE_HEIGHT_STORE_KEY, adaptive)
+})
+
 const LIST_PANEL_WIDTH_STORE_KEY = "listPanelWidth"
 ipcMain.on("get-list-panel-width", event => {
     event.returnValue = store.get(LIST_PANEL_WIDTH_STORE_KEY, 350)

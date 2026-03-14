@@ -139,6 +139,13 @@ const settingsBridge = {
         ipcRenderer.invoke("set-magazine-width", width)
     },
 
+    getMagazineAdaptiveHeight: (): boolean => {
+        return ipcRenderer.sendSync("get-magazine-adaptive-height")
+    },
+    setMagazineAdaptiveHeight: (adaptive: boolean) => {
+        ipcRenderer.invoke("set-magazine-adaptive-height", adaptive)
+    },
+
     getListPanelWidth: (): number => {
         return ipcRenderer.sendSync("get-list-panel-width")
     },

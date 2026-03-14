@@ -4,6 +4,7 @@ import CardInfo from "./info"
 import Time from "../utils/time"
 import Highlights from "./highlights"
 import { SourceTextDirection } from "../../scripts/models/source"
+import { extractSnippetExcerpt } from "../../scripts/utils"
 
 const className = (props: Card.Props) => {
     let cn = ["card", "compact-card"]
@@ -41,7 +42,7 @@ const CompactCard: React.FunctionComponent<Card.Props> = props => {
                     />
                 </span>
                 <span className="snippet" style={snippetStyle}>
-                    <Highlights text={props.item.snippet} filter={props.filter} />
+                    <Highlights text={extractSnippetExcerpt(props.item.snippet)} filter={props.filter} />
                 </span>
             </div>
             <Time date={props.item.date} />

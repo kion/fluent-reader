@@ -98,7 +98,11 @@
         "caseSensitive": "Case sensitive",
         "showCover": "Show cover",
         "showSnippet": "Show snippet",
-        "fadeRead": "Fade read articles"
+        "fadeRead": "Fade read articles",
+        "display": "Display",
+        "height": "Height",
+        "fixedHeight": "Fixed",
+        "adaptiveHeight": "Adaptive"
     },
     "searchEngine": {
         "name": "Search engine",

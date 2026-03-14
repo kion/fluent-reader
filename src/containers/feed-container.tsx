@@ -23,6 +23,7 @@ const getViewConfigs = (state: RootState) => state.page.viewConfigs
 const getViewFontConfigs = (state: RootState) => state.page.viewFontConfigs
 const getCurrentItem = (state: RootState) => state.page.itemId
 const getMagazineWidth = (state: RootState) => state.app.magazineWidth
+const getMagazineAdaptiveHeight = (state: RootState) => state.app.magazineAdaptiveHeight
 
 const makeMapStateToProps = () => {
     return createSelector(
@@ -36,8 +37,9 @@ const makeMapStateToProps = () => {
             getViewFontConfigs,
             getCurrentItem,
             getMagazineWidth,
+            getMagazineAdaptiveHeight,
         ],
-        (sources, items, feed, viewType, filter, viewConfigs, viewFontConfigs, currentItem, magazineWidth) => ({
+        (sources, items, feed, viewType, filter, viewConfigs, viewFontConfigs, currentItem, magazineWidth, magazineAdaptiveHeight) => ({
             feed: feed,
             items: feed.iids.map(iid => items[iid]),
             sourceMap: sources,
@@ -48,6 +50,7 @@ const makeMapStateToProps = () => {
             fontFamily: viewFontConfigs.fontFamily,
             currentItem: currentItem,
             magazineWidth: magazineWidth,
+            magazineAdaptiveHeight: magazineAdaptiveHeight,
         })
     )
 }

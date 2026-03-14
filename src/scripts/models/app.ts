@@ -87,6 +87,7 @@ export class AppState {
     menuKey = ALL
     title = ""
     magazineWidth = window.settings.getMagazineWidth()
+    magazineAdaptiveHeight = window.settings.getMagazineAdaptiveHeight()
     listPanelWidth = window.settings.getListPanelWidth()
     settings = {
         display: false,
@@ -212,6 +213,7 @@ export type SettingsActionTypes =
 
 export const SET_MAGAZINE_WIDTH = "SET_MAGAZINE_WIDTH"
 export const SET_LIST_PANEL_WIDTH = "SET_LIST_PANEL_WIDTH"
+export const SET_MAGAZINE_ADAPTIVE_HEIGHT = "SET_MAGAZINE_ADAPTIVE_HEIGHT"
 
 interface SetMagazineWidthAction {
     type: typeof SET_MAGAZINE_WIDTH
@@ -221,9 +223,14 @@ interface SetListPanelWidthAction {
     type: typeof SET_LIST_PANEL_WIDTH
     width: number
 }
+interface SetMagazineAdaptiveHeightAction {
+    type: typeof SET_MAGAZINE_ADAPTIVE_HEIGHT
+    adaptive: boolean
+}
 export type ViewWidthActionTypes =
     | SetMagazineWidthAction
     | SetListPanelWidthAction
+    | SetMagazineAdaptiveHeightAction
 
 export function closeContextMenu(): AppThunk {
     return (dispatch, getState) => {
@@ -308,6 +315,16 @@ export function setMagazineWidth(width: number): AppThunk {
         dispatch({
             type: SET_MAGAZINE_WIDTH,
             width: width,
+        })
+    }
+}
+
+export function setMagazineAdaptiveHeight(adaptive: boolean): AppThunk {
+    return (dispatch) => {
+        window.settings.setMagazineAdaptiveHeight(adaptive)
+        dispatch({
+            type: SET_MAGAZINE_ADAPTIVE_HEIGHT,
+            adaptive: adaptive,
         })
     }
 }
@@ -749,6 +766,11 @@ export function appReducer(
             return {
                 ...state,
                 magazineWidth: action.width,
+            }
+        case SET_MAGAZINE_ADAPTIVE_HEIGHT:
+            return {
+                ...state,
+                magazineAdaptiveHeight: action.adaptive,
             }
         case SET_LIST_PANEL_WIDTH:
             return {
